@@ -33,12 +33,11 @@
             label2 = new Label();
             button1 = new Button();
             listBox1 = new ListBox();
-            buttonDeleteOldest = new Button();
-            buttonDeleteEarliest = new Button();
             label3 = new Label();
             textBox2 = new TextBox();
             label4 = new Label();
             textBox3 = new TextBox();
+            button3 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -49,7 +48,6 @@
             label1.Size = new Size(75, 25);
             label1.TabIndex = 0;
             label1.Text = "Website";
-            label1.Click += label1_Click;
             // 
             // textBox1
             // 
@@ -71,7 +69,7 @@
             // 
             button1.Location = new Point(29, 113);
             button1.Name = "button1";
-            button1.Size = new Size(112, 34);
+            button1.Size = new Size(150, 34);
             button1.TabIndex = 8;
             button1.Text = "Save";
             button1.UseVisualStyleBackColor = true;
@@ -85,26 +83,6 @@
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(844, 179);
             listBox1.TabIndex = 9;
-            // 
-            // buttonDeleteOldest
-            // 
-            buttonDeleteOldest.Location = new Point(177, 113);
-            buttonDeleteOldest.Name = "buttonDeleteOldest";
-            buttonDeleteOldest.Size = new Size(159, 34);
-            buttonDeleteOldest.TabIndex = 10;
-            buttonDeleteOldest.Text = "Delete Oldest";
-            buttonDeleteOldest.UseVisualStyleBackColor = true;
-            buttonDeleteOldest.Click += buttonDeleteOldest_Click;
-            // 
-            // buttonDeleteEarliest
-            // 
-            buttonDeleteEarliest.Location = new Point(353, 113);
-            buttonDeleteEarliest.Name = "buttonDeleteEarliest";
-            buttonDeleteEarliest.Size = new Size(182, 34);
-            buttonDeleteEarliest.TabIndex = 11;
-            buttonDeleteEarliest.Text = "Delete Earliest";
-            buttonDeleteEarliest.UseVisualStyleBackColor = true;
-            buttonDeleteEarliest.Click += buttonDeleteEarliest_Click;
             // 
             // label3
             // 
@@ -140,17 +118,26 @@
             textBox3.Size = new Size(150, 31);
             textBox3.TabIndex = 15;
             // 
+            // button3
+            // 
+            button3.Location = new Point(207, 113);
+            button3.Name = "button3";
+            button3.Size = new Size(150, 34);
+            button3.TabIndex = 18;
+            button3.Text = "Delecte Selected";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(897, 450);
+            Controls.Add(button3);
             Controls.Add(textBox3);
             Controls.Add(label4);
             Controls.Add(textBox2);
             Controls.Add(label3);
-            Controls.Add(buttonDeleteEarliest);
-            Controls.Add(buttonDeleteOldest);
             Controls.Add(listBox1);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -169,11 +156,10 @@
         private Label label2;
         private Button button1;
         private ListBox listBox1;
-        private Button buttonDeleteOldest;
-        private Button buttonDeleteEarliest;
         private Label label3;
         private TextBox textBox2;
         private Label label4;
         private TextBox textBox3;
+        private Button button3;
     }
 }
