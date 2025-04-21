@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Hung_Exercise4
+namespace Castro_Hung_FinalProject
 {
     public partial class Form1 : Form
     {
@@ -27,7 +27,6 @@ namespace Hung_Exercise4
                 XDocument xmlDoc = XDocument.Load(xmlFilePath);
                 listBox1.Items.Clear();
 
-
                 foreach (XElement record in xmlDoc.Descendants("Record"))
                 {
                     string website = record.Element("Website")?.Value;
@@ -36,6 +35,7 @@ namespace Hung_Exercise4
                     string hashed_password = record.Element("Hashed_Password")?.Value;
 
                     listBox1.Items.Add($"Website: {website}, Username: {username}, Password: {password}, Hashed Password: {hashed_password}");
+                    
                 }
             }
         }
@@ -60,24 +60,55 @@ namespace Hung_Exercise4
         // Save Record
         private void button1_Click(object sender, EventArgs e)
         {
-            string website = textBox1.Text;
-            string username = textBox2.Text;
-            string password = textBox3.Text;
-            string hashed_password = EncryptPassword(password);
+            string website = textBox1.Text.Trim();
+            string username = textBox2.Text.Trim();
+            string password = textBox3.Text.Trim();
+            string hashed_password = "";
 
             PasswordRecord record = new PasswordRecord(website, username, password, hashed_password);
+
+            if (website == "" || username == "" || password == "")
+            {
+                MessageBox.Show("Please fill out the forms");
+                return;
+            }
+            if (dataManager.HasRecord(record) == true)
+            {
+                MessageBox.Show("There is a duplicate record, please change the username");
+                return;
+            }
+            if(password.Length < 10)
+            {
+                MessageBox.Show("Please input a password length greater than 10");
+                return;
+            }
+            else
+            {
+                record.Hashed_Password = EncryptPassword(password);
+            }
+
             dataManager.SaveRecord(record);
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
             LoadData();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string cur_selected = listBox1.SelectedItem.ToString();
+            string cur_selected = "";
+            if(listBox1.SelectedItem != null)
+            {
+                cur_selected = listBox1.SelectedItem.ToString();
+            }
+            else
+            {
+                MessageBox.Show("There are no records to delete");
+                return;
+            }
 
             dataManager.RemoveRecord(cur_selected);
-
             LoadData();
-
         }
     }
 
@@ -160,8 +191,34 @@ namespace Hung_Exercise4
                 }
             }
         }
-    }
 
-    
+        public bool HasRecord(PasswordRecord cur_record)
+        {
+            XDocument xmlDoc;
+
+            if (File.Exists(filePath))
+            {
+                xmlDoc = XDocument.Load(filePath);
+            }
+            else
+            {
+                xmlDoc = new XDocument(new XElement("PasswordRecords"));
+                MessageBox.Show("Lil Bro Go Make A Record First");
+            }
+
+            foreach (XElement record in xmlDoc.Descendants("Record"))
+            {
+                string website = record.Element("Website")?.Value;
+                string username = record.Element("Username")?.Value;
+                string password = record.Element("Password")?.Value;
+
+                if (website == cur_record.Website && username == cur_record.Username) 
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }
 
